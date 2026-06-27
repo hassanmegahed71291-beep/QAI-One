@@ -1,15 +1,20 @@
-function setLanguage(lang) {
-  if (lang === "ar") {
-    document.querySelector("header h1").textContent = "QAI ONE - الجودة الرقمية الأولى";
-    document.querySelector(".tagline").textContent = "الجودة العالمية ببساطة";
-    document.querySelector(".founder").textContent = "المؤسس: Hassan Megahed";
-    document.querySelector("#about h2").textContent = "عن المنصة";
-    document.querySelector("#about p").textContent = "QAI ONE هي منصة عالمية لإدارة الجودة الرقمية والتدريب.";
+// Sidebar toggle
+const sidebar = document.getElementById("sidebar");
+const toggleBtn = document.getElementById("menu-toggle");
+
+toggleBtn.addEventListener("click", () => {
+  if (sidebar.style.transform === "translateX(-220px)") {
+    sidebar.style.transform = "translateX(0)";
   } else {
-    document.querySelector("header h1").textContent = "QAI ONE - Digital Quality First";
-    document.querySelector(".tagline").textContent = "Global Quality, Simplified";
-    document.querySelector(".founder").textContent = "Founder: Hassan Megahed";
-    document.querySelector("#about h2").textContent = "About the Platform";
-    document.querySelector("#about p").textContent = "QAI ONE is a global platform for digital quality management and training.";
+    sidebar.style.transform = "translateX(-220px)";
   }
-}
+});
+
+// Line Chart
+const ctxLine = document.getElementById('inspectionTrend');
+new Chart(ctxLine, {
+  type: 'line',
+  data: {
+    labels: ['May 1','May 10','May 20','May 31'],
+    datasets: [
+      { label: 'Inspections', data: [200,300,400,
