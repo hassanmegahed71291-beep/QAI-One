@@ -10,34 +10,90 @@
   <header>
     <img src="logo.png" alt="QAI ONE Logo" class="logo">
     <h1>Simulation Training</h1>
+    <!-- Language Switch -->
+    <select id="lang-switch" onchange="setLanguage(this.value)">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+    </select>
   </header>
 
   <!-- Customer Simulation -->
   <section class="simulation">
-    <h2>Customer Simulation</h2>
-    <p><strong>Scenario:</strong> A customer is angry because the product they received has a defect.</p>
-    <p><em>Customer says:</em> "This product is defective and I am very disappointed!"</p>
-    <textarea placeholder="Write your response here..."></textarea>
-    <button>Submit Response</button>
+    <h2 id="cust-title"></h2>
+    <p id="cust-scenario"></p>
+    <p id="cust-msg"></p>
+    <textarea id="cust-response" placeholder="اكتب ردك هنا..."></textarea>
+    <button>إرسال الرد</button>
   </section>
 
   <!-- Manager Simulation -->
   <section class="simulation">
-    <h2>Manager Simulation</h2>
-    <p><strong>Scenario:</strong> The manager requests an urgent inspection report within 10 minutes.</p>
-    <p><em>Manager says:</em> "I need the report now, no excuses!"</p>
-    <textarea placeholder="Write your response here..."></textarea>
-    <button>Submit Response</button>
+    <h2 id="mgr-title"></h2>
+    <p id="mgr-scenario"></p>
+    <p id="mgr-msg"></p>
+    <textarea id="mgr-response" placeholder="اكتب ردك هنا..."></textarea>
+    <button>إرسال الرد</button>
   </section>
 
   <!-- Daily Tips -->
   <section class="tips">
-    <h2>Daily Tips</h2>
-    <ul>
-      <li>✅ Always double-check measurements before final approval.</li>
-      <li>💡 Use clear and polite language with customers.</li>
-      <li>📊 Summarize key findings in reports for quick review.</li>
-    </ul>
+    <h2 id="tips-title"></h2>
+    <ul id="tips-list"></ul>
   </section>
+
+  <script>
+    const messages = {
+      ar: {
+        custTitle: "محاكاة العملاء",
+        custScenario: "📌 السيناريو: عميل غاضب بسبب عيب في المنتج.",
+        custMsg: "العميل يقول: هذا المنتج فيه عيب وأنا مستاء جدًا!",
+        mgrTitle: "محاكاة المدير",
+        mgrScenario: "📌 السيناريو: المدير يطلب تقرير عاجل خلال 10 دقائق.",
+        mgrMsg: "المدير يقول: أحتاج التقرير الآن، بدون أعذار!",
+        tipsTitle: "نصائح يومية",
+        tips: [
+          "✅ تأكد من مراجعة المقاسات مرتين قبل الاعتماد النهائي.",
+          "💡 استخدم لغة واضحة ومحترمة مع العملاء.",
+          "📊 لخص النتائج الرئيسية في التقارير لسهولة المراجعة."
+        ]
+      },
+      en: {
+        custTitle: "Customer Simulation",
+        custScenario: "📌 Scenario: A customer is angry because the product has a defect.",
+        custMsg: "Customer says: This product is defective and I am very disappointed!",
+        mgrTitle: "Manager Simulation",
+        mgrScenario: "📌 Scenario: The manager requests an urgent inspection report within 10 minutes.",
+        mgrMsg: "Manager says: I need the report now, no excuses!",
+        tipsTitle: "Daily Tips",
+        tips: [
+          "✅ Always double-check measurements before final approval.",
+          "💡 Use clear and polite language with customers.",
+          "📊 Summarize key findings in reports for quick review."
+        ]
+      }
+    };
+
+    function setLanguage(lang) {
+      document.getElementById("cust-title").innerText = messages[lang].custTitle;
+      document.getElementById("cust-scenario").innerText = messages[lang].custScenario;
+      document.getElementById("cust-msg").innerText = messages[lang].custMsg;
+
+      document.getElementById("mgr-title").innerText = messages[lang].mgrTitle;
+      document.getElementById("mgr-scenario").innerText = messages[lang].mgrScenario;
+      document.getElementById("mgr-msg").innerText = messages[lang].mgrMsg;
+
+      document.getElementById("tips-title").innerText = messages[lang].tipsTitle;
+      const tipsList = document.getElementById("tips-list");
+      tipsList.innerHTML = "";
+      messages[lang].tips.forEach(tip => {
+        const li = document.createElement("li");
+        li.innerText = tip;
+        tipsList.appendChild(li);
+      });
+    }
+
+    // الافتراضي: اللغة العربية
+    setLanguage("ar");
+  </script>
 </body>
 </html>
