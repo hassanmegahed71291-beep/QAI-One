@@ -11,11 +11,11 @@
   <nav id="sidebar">
     <div class="logo">QAI ONE</div>
     <ul>
-      <li><span>📊</span> Dashboard</li>
-      <li><span>📑</span> Reports</li>
-      <li><span>👤</span> Users</li>
-      <li><span>🎓</span> Academy</li>
-      <li><span>🧩</span> Simulation</li>
+      <li id="menu-dashboard"><span>📊</span></li>
+      <li id="menu-reports"><span>📑</span></li>
+      <li id="menu-users"><span>👤</span></li>
+      <li id="menu-academy"><span>🎓</span></li>
+      <li id="menu-simulation"><span>🧩</span></li>
       <li>
         <span>🌐</span>
         <select id="lang-switch" onchange="setLanguage(this.value)">
@@ -28,13 +28,16 @@
 
   <!-- Dashboard -->
   <main id="dashboard">
-    <h1>لوحة التحكم</h1>
+    <h1 id="page-title"></h1>
     <div class="kpi-container">
-      <div class="kpi-card">📊 Total Inspections: 1248 ↑12.5%</div>
-      <div class="kpi-card">✅ Pass Rate: 96.7% ↑3.2%</div>
-      <div class="kpi-card">❌ Defects Found: 342 ↓8.4%</div>
-      <div class="kpi-card">⚠️ Open CAPA: 18 ↓10%</div>
+      <div class="kpi-card" id="kpi-inspections"></div>
+      <div class="kpi-card" id="kpi-passrate"></div>
+      <div class="kpi-card" id="kpi-defects"></div>
+      <div class="kpi-card" id="kpi-capa"></div>
     </div>
+
+    <!-- زر تفاعلي -->
+    <button id="action-btn"></button>
 
     <!-- Charts -->
     <div class="charts">
@@ -44,16 +47,70 @@
 
     <!-- Recent Inspections Table -->
     <table class="recent">
-      <tr><th>ID</th><th>Product</th><th>Supplier</th><th>Status</th><th>Result</th><th>Date</th></tr>
-      <tr><td>INS-2024-1250</td><td>Wireless Earbuds X1</td><td>ABC Electronics</td><td>Completed</td><td>Pass</td><td>May 31</td></tr>
-      <tr><td>INS-2024-1248</td><td>LED Desk Lamp</td><td>Bright Light Co.</td><td>Completed</td><td>Fail</td><td>May 30</td></tr>
+      <thead>
+        <tr>
+          <th id="th-id"></th>
+          <th id="th-product"></th>
+          <th id="th-supplier"></th>
+          <th id="th-status"></th>
+          <th id="th-result"></th>
+          <th id="th-date"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>INS-2024-1250</td><td>Wireless Earbuds X1</td><td>ABC Electronics</td><td>Completed</td><td>Pass</td><td>May 31</td></tr>
+        <tr><td>INS-2024-1248</td><td>LED Desk Lamp</td><td>Bright Light Co.</td><td>Completed</td><td>Fail</td><td>May 30</td></tr>
+      </tbody>
     </table>
   </main>
 
   <!-- Chart.js Library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Line Chart Example
+    const messages = {
+      ar: {
+        title: "لوحة التحكم",
+        menu: {dashboard:"الرئيسية",reports:"التقارير",users:"المستخدمين",academy:"الأكاديمية",simulation:"المحاكاة"},
+        kpi: {inspections:"📊 إجمالي الفحوصات: 1248 ↑12.5%",passrate:"✅ نسبة النجاح: 96.7% ↑3.2%",defects:"❌ العيوب المكتشفة: 342 ↓8.4%",capa:"⚠️ حالات مفتوحة: 18 ↓10%"},
+        button: "ابدأ الفحص",
+        table: {id:"الرقم",product:"المنتج",supplier:"المورد",status:"الحالة",result:"النتيجة",date:"التاريخ"}
+      },
+      en: {
+        title: "Dashboard",
+        menu: {dashboard:"Dashboard",reports:"Reports",users:"Users",academy:"Academy",simulation:"Simulation"},
+        kpi: {inspections:"📊 Total Inspections: 1248 ↑12.5%",passrate:"✅ Pass Rate: 96.7% ↑3.2%",defects:"❌ Defects Found: 342 ↓8.4%",capa:"⚠️ Open CAPA: 18 ↓10%"},
+        button: "Start Inspection",
+        table: {id:"ID",product:"Product",supplier:"Supplier",status:"Status",result:"Result",date:"Date"}
+      }
+    };
+
+    function setLanguage(lang) {
+      document.getElementById("page-title").innerText = messages[lang].title;
+      document.getElementById("menu-dashboard").innerHTML = "📊 " + messages[lang].menu.dashboard;
+      document.getElementById("menu-reports").innerHTML = "📑 " + messages[lang].menu.reports;
+      document.getElementById("menu-users").innerHTML = "👤 " + messages[lang].menu.users;
+      document.getElementById("menu-academy").innerHTML = "🎓 " + messages[lang].menu.academy;
+      document.getElementById("menu-simulation").innerHTML = "🧩 " + messages[lang].menu.simulation;
+
+      document.getElementById("kpi-inspections").innerText = messages[lang].kpi.inspections;
+      document.getElementById("kpi-passrate").innerText = messages[lang].kpi.passrate;
+      document.getElementById("kpi-defects").innerText = messages[lang].kpi.defects;
+      document.getElementById("kpi-capa").innerText = messages[lang].kpi.capa;
+
+      document.getElementById("action-btn").innerText = messages[lang].button;
+
+      document.getElementById("th-id").innerText = messages[lang].table.id;
+      document.getElementById("th-product").innerText = messages[lang].table.product;
+      document.getElementById("th-supplier").innerText = messages[lang].table.supplier;
+      document.getElementById("th-status").innerText = messages[lang].table.status;
+      document.getElementById("th-result").innerText = messages[lang].table.result;
+      document.getElementById("th-date").innerText = messages[lang].table.date;
+    }
+
+    // الافتراضي عربي
+    setLanguage("ar");
+
+    // Charts
     const ctx1 = document.getElementById('inspectionTrend').getContext('2d');
     new Chart(ctx1, {
       type: 'line',
@@ -66,7 +123,6 @@
       }
     });
 
-    // Pie Chart Example
     const ctx2 = document.getElementById('statusPie').getContext('2d');
     new Chart(ctx2, {
       type: 'pie',
