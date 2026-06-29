@@ -115,3 +115,38 @@ table.recent th {
 table.recent tr:hover {
   background-color: #2c3e5c;
 }
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .kpi-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .charts {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    width: 200px;
+  }
+  .kpi-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #sidebar {
+    display: none; /* إخفاء القائمة الجانبية على الموبايل */
+  }
+  #dashboard {
+    padding: 15px;
+  }
+  .kpi-card {
+    font-size: 14px;
+    padding: 15px;
+  }
+  table.recent th, table.recent td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
