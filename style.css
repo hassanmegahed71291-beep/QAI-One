@@ -26,7 +26,7 @@ body {
 /* رسالة الترحيب */
 .welcome {
   text-align: center;
-  margin-top: 10%;
+  margin-top: 8%;
 }
 .welcome h1 {
   font-size: 48px;
@@ -89,13 +89,13 @@ body {
   height: 100vh;
   position: fixed;
   top: 0;
-  right: -250px; /* مخفية افتراضيًا */
+  right: -260px; /* مخفية تمامًا */
   transition: right 0.3s ease;
   padding: 20px;
   z-index: 1000;
 }
 .sidebar.active {
-  right: 0; /* تظهر عند الضغط */
+  right: 0; /* تظهر بالكامل */
 }
 .sidebar .logo {
   text-align: center;
